@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>{% block title %}HostelCare{% endblock %} · HCMS</title>
+ <link rel="stylesheet" href="/static/style.css">
+ <script defer src="/static/app.js"></script>
+</head>
+<body>
+{% if user %}
+<div class="app-shell">
+ <aside class="sidebar" id="sidebar">
+  <div class="brand"><span class="brand-icon">H</span><span>HostelCare<small>Campus maintenance</small></span></div>
+  <div class="section-label">WORKSPACE</div>
+  <nav class="main-nav" aria-label="Main navigation">
+   <a href="/dashboard" class="nav-link"><span class="nav-ico">▦</span>Dashboard</a>
+   {% if user.role == 'STUDENT' %}<a href="/student/new" class="nav-link"><span class="nav-ico">＋</span>New complaint</a>{% endif %}
+   <a href="/notifications" class="nav-link"><span class="nav-ico">◉</span>Notifications {% if unread_count %}<span class="counter">{{unread_count}}</span>{% endif %}</a>
+   <a href="/profile" class="nav-link"><span class="nav-ico">♙</span>My profile</a>
+   <a href="/profile/password" class="nav-link"><span class="nav-ico">◇</span>Change password</a>
+  </nav>
+  <div class="sidebar-bottom"><div class="profile-avatar">{{(user.preferred_name or user.name)[0]|upper}}</div>
+   <div class="profile-info"><strong>{{user.preferred_name or user.name}}</strong><small>{{user.role.replace('_',' ')|title}}</small></div></div>
+  <form method="post" action="/logout" class="logout"><input type="hidden" name="csrf_token" value="{{csrf}}"><button class="btn btn-ghost btn-small" type="submit">Sign out →</button></form>
+ </aside>
+ <div class="main-column">
+  <header class="topbar"><button id="menuToggle" class="menu-toggle" aria-label="Open navigation" type="button">☰</button>
+   <div class="topbar-text">Hostel Complaint & Maintenance System</div>
+   <a href="/notifications" class="header-bell" aria-label="Notifications">♧ {% if unread_count %}<b>{{unread_count}}</b>{% endif %}</a>
+   <a class="topbar-user" href="/profile">{{user.login_id}}</a>
+  </header>
+  <main class="content" id="mainContent">
+{% if msg %}<div class="alert {{'alert-error' if kind=='error' else 'alert-success'}}" role="status">{{msg}}</div>{% endif %}
+{% block content %}{% endblock %}
+  </main>
+  <footer class="foot">HostelCare · Secure campus operations · All times shown in server time</footer>
+ </div>
+</div>
+{% else %}
+<main>{% block anon_content %}{% endblock %}</main>
+{% endif %}
+</body></html>

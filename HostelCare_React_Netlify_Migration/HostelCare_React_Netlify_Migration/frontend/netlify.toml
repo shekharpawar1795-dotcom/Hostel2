@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# scripts/netlify-redirects.mjs adds the secure /api/* reverse proxy at build time.
+# Configure BACKEND_ORIGIN on Netlify (Site configuration > Environment variables).

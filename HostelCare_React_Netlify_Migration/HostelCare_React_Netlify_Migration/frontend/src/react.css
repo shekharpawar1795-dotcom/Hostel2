@@ -1,0 +1,61 @@
+/* React-only refinements. The original HostelCare style sheet is preserved above. */
+*{box-sizing:border-box}
+body{margin:0}
+button{cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;gap:.4rem}
+.react-field{display:block;margin:12px 0;font-weight:600;color:#25384c}
+.react-field>span{display:block;margin-bottom:7px;font-size:.87rem}
+.react-field input,.react-field select,.react-field textarea{display:block;width:100%;margin:0;font-weight:400}
+.react-field textarea{resize:vertical}
+.react-field input[type=file]{padding:10px 0}
+.inline-actions{display:flex;align-items:center;flex-wrap:wrap;gap:5px}
+.inline-form{display:inline-flex;align-items:center;gap:6px;margin:0}
+.inline-form .btn{white-space:nowrap;margin:0}
+.inline-phone{display:flex;gap:5px;align-items:center}
+.inline-phone input{min-width:110px;max-width:165px;margin:0}
+.inline-phone .btn{white-space:nowrap}
+.admin-inline-form{display:flex;flex-wrap:wrap;align-items:end;gap:14px;margin-top:18px}
+.admin-inline-form .react-field{flex:1;min-width:145px;margin:0}
+.admin-grid{align-items:start}
+.card form:not(.inline-form):not(.inline-phone):not(.admin-inline-form){margin-bottom:15px}
+.card form>.btn{margin-top:8px}
+.aside-stack .card form+.btn,.aside-stack .card form+form{margin-top:13px}
+.aside-stack form .btn{width:100%;margin:6px 0}
+.react-filters{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 20px}
+.react-filters input,.react-filters select{max-width:260px}
+.react-filters .btn{align-self:stretch}
+.card .detail-row strong{overflow-wrap:anywhere;text-align:right}
+.card .photo-grid img{object-fit:cover}
+.app-loading,.loading-panel{padding:4rem;text-align:center;color:#58708a}
+.dismiss{float:right;border:0;background:transparent;font-size:1.4rem;color:inherit}
+.mobile-menu{display:none}
+.sidebar-overlay{display:none}
+.main-nav .nav-link.selected{background:#284a6a;color:#fff}
+.login-page{min-height:100vh;background:#f4f7fb;display:flex;align-items:center;justify-content:center;padding:24px}
+.login-wrap{width:min(100%,1000px);display:grid;grid-template-columns:1.1fr 1fr;background:#fff;overflow:hidden;border-radius:22px;box-shadow:0 22px 75px rgba(29,52,82,.13)}
+.login-hero{background:linear-gradient(150deg,#092f50,#0f6282);color:white;padding:64px 45px;min-height:475px;position:relative}
+.login-hero h1{font-size:clamp(2rem,3vw,3.4rem);line-height:1.2;color:white;margin:22px 0}
+.login-hero p{line-height:1.7;color:#d4e4f0;max-width:400px}
+.login-hero .eyebrow{color:#a9d7ec}
+.login-art{font-size:140px;opacity:.14;position:absolute;bottom:0;right:35px}
+.login-form-container{padding:55px 42px}
+.login-form-container h2{margin:35px 0 5px;font-size:1.7rem}
+.login-form-container>p{color:#668098}
+.login-form{margin-top:30px}
+.login-form .btn{width:100%;margin-top:14px}
+.brand.big{color:#112f4d}
+@media(max-width:900px){
+ .mobile-menu{display:flex;position:fixed;left:10px;top:9px;z-index:1000;padding:6px 10px}
+ .sidebar{transform:translateX(-105%);transition:transform .22s ease;position:fixed;z-index:1002;height:100vh;overflow:auto}
+ .sidebar.open{transform:translateX(0)}
+ .sidebar-overlay{display:block;position:fixed;inset:0;background:#0006;z-index:1001;border:0}
+ .main-column{margin-left:0!important;width:100%!important}
+ .topbar{padding-left:110px!important}
+}
+@media(max-width:700px){
+ .login-wrap{grid-template-columns:1fr}.login-hero{min-height:190px;padding:30px}.login-hero h1{font-size:2rem;margin:10px 0}.login-hero p{font-size:.87rem}.login-art{font-size:85px}
+ .login-form-container{padding:24px}
+ .admin-inline-form{display:block}.admin-inline-form .react-field{margin:12px 0}
+ .react-filters input,.react-filters select{width:100%;max-width:none}
+ .inline-actions{flex-direction:column;align-items:flex-start}
+}

@@ -1,0 +1,2 @@
+{% extends 'base.html' %}{% block title %}Request error{% endblock %}
+{% block content %}<div class="error-panel"><h1>{{title}}</h1><p>{{error}}</p><p class="muted">Error code: {{status}}</p><a class="btn btn-primary" href="/dashboard">Go back to dashboard</a></div>{% endblock %}

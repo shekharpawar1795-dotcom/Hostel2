@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block title %}Notifications{% endblock %}{% block content %}
+<div class="page-header"><div><div class="eyebrow">YOUR ACTIVITY</div><h1>Notifications</h1><p>Stay informed about important hostel updates.</p></div><form method="post" action="/notifications/read"><input type="hidden" name="csrf_token" value="{{csrf}}"><button type="submit" class="btn btn-outline">Mark all as read</button></form></div>
+<div class="card"><div class="notification-list">{% for n in notes %}<div class="notification-row {{'unread' if not n.read_at else ''}}"><span class="notification-icon">◉</span><div><strong>{{n.title}}</strong><p>{{n.body}}</p><small>{{n.created_at.strftime('%d %b %Y · %H:%M')}}</small>{% if n.complaint_id %} <a class="link" href="/complaints/{{n.complaint_id}}">View complaint →</a>{% endif %}</div></div>{% else %}<div class="empty"><h3>No notifications yet</h3><p>Your alerts will appear here.</p></div>{% endfor %}</div></div>
+{% endblock %}

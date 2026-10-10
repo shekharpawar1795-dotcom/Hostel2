@@ -1,0 +1,1 @@
+"""HCMS web application."""

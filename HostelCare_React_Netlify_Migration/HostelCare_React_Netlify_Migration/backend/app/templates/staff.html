@@ -1,0 +1,5 @@
+{% extends 'base.html' %}{% block title %}Maintenance tasks{% endblock %}{% block content %}
+<div class="page-header"><div><div class="eyebrow">MAINTENANCE WORKSPACE</div><h1>My assigned tasks</h1><p>Accept tasks, record repairs and keep students informed.</p></div></div>
+<div class="card"><div class="card-head"><h3>Your work queue</h3><span class="tag">{{complaints|length}} tasks</span></div>
+{% for c in complaints %}<a href="/complaints/{{c.id}}" class="task-tile"><div class="task-icon">⚒</div><div class="task-body"><strong>{{c.number}} · {{c.effective_category|title}}</strong><p>{{c.description[:130]}}</p><small>Submitted {{c.created_at.strftime('%d %b %Y')}}</small></div><div class="task-right"><span class="status status-{{c.status|lower}}">{{c.status.replace('_',' ')|title}}</span><span class="arrow">→</span></div></a>{% else %}<div class="empty"><div class="empty-icon">✓</div><h3>No tasks assigned</h3><p>New assignments from the Rector will appear here.</p></div>{% endfor %}</div>
+{% endblock %}

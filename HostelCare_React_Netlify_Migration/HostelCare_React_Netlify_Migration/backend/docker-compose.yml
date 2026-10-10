@@ -1,0 +1,60 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hcms
+      POSTGRES_USER: hcms
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set a strong POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hcms -d hcms"]
+      interval: 5s
+      retries: 12
+  web:
+    build: .
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: hcms
+      DB_USER: hcms
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env}
+      SECURE_COOKIES: ${SECURE_COOKIES:-false}
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      UPLOAD_DIR: /srv/app/private_uploads
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_FROM: ${SMTP_FROM:-hcms@example.invalid}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+    ports: ["127.0.0.1:8000:8000"]
+    volumes: ["uploads:/srv/app/private_uploads"]
+    depends_on:
+      db: {condition: service_healthy}
+  worker:
+    build: .
+    restart: unless-stopped
+    command: ["python","scripts/worker.py"]
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: hcms
+      DB_USER: hcms
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      SESSION_SECRET: ${SESSION_SECRET}
+      UPLOAD_DIR: /srv/app/private_uploads
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_FROM: ${SMTP_FROM:-hcms@example.invalid}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      WORKER_INTERVAL_SECONDS: 300
+    volumes: ["uploads:/srv/app/private_uploads"]
+    depends_on:
+      db: {condition: service_healthy}
+volumes:
+  postgres_data:
+  uploads:
